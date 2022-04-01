@@ -1,5 +1,5 @@
 <template>
-  <div class="item">
+  <router-link class="item" :to="{ name: routeTo }">
     <i>
       <slot name="icon"></slot>
     </i>
@@ -9,8 +9,19 @@
       </h3>
       <slot></slot>
     </div>
-  </div>
+  </router-link>
 </template>
+
+<script>
+export default {
+  props: {
+    routeTo: {
+      type: String,
+      default: "home",
+    },
+  },
+};
+</script>
 
 <style scoped>
 .item {

@@ -1,40 +1,55 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
-</script>
-
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="viewRow">
+    <left v-if="left" class="layout left-layout"></left>
+    <vertical-nav @emitLayout="setLayout"></vertical-nav>
+    <right v-if="right" class="layout right-layout"></right>
+  </div>
 </template>
 
-<style>
+<script>
+import Left from "@/views/BaseLayouts/LeftView.vue";
+import Right from "@/views/BaseLayouts/RightView.vue";
+import VerticalNav from "@/components/VerticalNav.vue";
+export default {
+  data() {
+    return {
+      left: true,
+      right: true,
+    };
+  },
+  methods: {
+    setLayout({ left, right }) {
+      (this.left = left), (this.right = right);
+    },
+  },
+  components: { Left, Right, VerticalNav },
+};
+</script>
+
+<style scoped>
 @import "@/assets/base.css";
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.viewRow {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  place-items: center;
+}
+.layout {
+  height: 100vh;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  /* transition: 2s all; */
+  transition: all 1s ease;
+}
 
-  font-weight: normal;
+.zeroWidth {
+  /* flex: none;
+  overflow-x: hidden; */
+  max-width: 0;
 }
 
 header {
